@@ -19,4 +19,8 @@ func main() {
 
 	var b byte = 1<<8 - 1
 	fmt.Println(b)
+
+	var x int = 10
+	x *= 2
+	fmt.Println(x)
 }
