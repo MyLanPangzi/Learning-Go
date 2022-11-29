@@ -1,0 +1,6 @@
+.DEFAULT_GAOL=vet
+
+vet:
+	go vet ./...
+	shadow ./...
+.PHONY:vet
