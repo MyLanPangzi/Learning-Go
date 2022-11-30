@@ -19,4 +19,5 @@ func main() {
 	var c byte = 'y'
 	fmt.Println(string(a), string(c), string(65), string(strconv.Itoa(65)))
 	fmt.Println([]byte(s2), []rune(s2))
+	fmt.Println("a" > "b", "a" == "a")
 }
