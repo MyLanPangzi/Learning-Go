@@ -9,17 +9,6 @@ func main() {
 	modifyFails(i, s, p)
 	fmt.Println(i, s, p)
 
-	//	 m := map[int]string{
-	//        1: "first",
-	//        2: "second",
-	//    }
-	//    modMap(m)
-	//    fmt.Println(m)
-	//
-	//    s := []int{1, 2, 3}
-	//    modSlice(s)
-	//    fmt.Println(s)
-
 	m := map[int]string{
 		1: "1",
 		2: "2",
