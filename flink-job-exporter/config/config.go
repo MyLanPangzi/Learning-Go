@@ -28,7 +28,7 @@ type AppConfig struct {
 }
 
 func LoadAppConfig() *AppConfig {
-	file, err := os.ReadFile("r.json")
+	file, err := os.ReadFile("config.json")
 	if err != nil {
 		log.Fatal(err)
 	}

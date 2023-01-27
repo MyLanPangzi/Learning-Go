@@ -5,7 +5,6 @@ import (
 	"flink-job-exporter/config"
 	"flink-job-exporter/dao"
 	"flink-job-exporter/service"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -57,7 +56,6 @@ func getRunningJobs(url string) []string {
 		log.Println(err)
 		return nil
 	}
-	fmt.Println(string(bytes))
 	err = json.Unmarshal(bytes, &jobs)
 	if err != nil {
 		log.Println(err)

@@ -50,11 +50,12 @@ func registerFlinkJobMetrics(jobService service.FlinkJobService, c *config.AppCo
 
 func openDb(c *config.AppConfig) *sql.DB {
 	var cfg = mysql.Config{
-		User:   c.Db.User,
-		Passwd: c.Db.Password,
-		Net:    "tcp",
-		Addr:   fmt.Sprintf("%s:%d", c.Db.Host, c.Db.Port),
-		DBName: c.Db.Name,
+		User:                 c.Db.User,
+		Passwd:               c.Db.Password,
+		Net:                  "tcp",
+		Addr:                 fmt.Sprintf("%s:%d", c.Db.Host, c.Db.Port),
+		DBName:               c.Db.Name,
+		AllowNativePasswords: true,
 	}
 	var db, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
