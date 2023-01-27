@@ -2,6 +2,7 @@ package impl
 
 import (
 	"encoding/json"
+	"flink-job-exporter/config"
 	"flink-job-exporter/dao"
 	"flink-job-exporter/service"
 	"fmt"
@@ -19,19 +20,18 @@ type Jobs struct {
 	} `json:"apps"`
 }
 
-const production = "prod"
-
 type FlinkJobServiceImpl struct {
-	dao dao.FlinkJobDao
+	dao    dao.FlinkJobDao
+	config *config.AppConfig
 }
 
-func NewFlinkJobServiceImpl(dao dao.FlinkJobDao) *FlinkJobServiceImpl {
-	return &FlinkJobServiceImpl{dao}
+func NewFlinkJobServiceImpl(dao dao.FlinkJobDao, config *config.AppConfig) *FlinkJobServiceImpl {
+	return &FlinkJobServiceImpl{dao: dao, config: config}
 }
 
 func (f *FlinkJobServiceImpl) GetJobStates() []service.JobState {
-	prodJobs := f.dao.GetByTag(production)
-	runningJobs := getRunningJobs()
+	prodJobs := f.dao.GetByTag(f.config.Monitor.Tag)
+	runningJobs := getRunningJobs(f.config.Yarn.Url)
 	var jobs []service.JobState
 	for _, job := range prodJobs {
 		if has(runningJobs, job) {
@@ -43,8 +43,7 @@ func (f *FlinkJobServiceImpl) GetJobStates() []service.JobState {
 	return jobs
 }
 
-func getRunningJobs() []string {
-	url := ""
+func getRunningJobs(url string) []string {
 	response, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
