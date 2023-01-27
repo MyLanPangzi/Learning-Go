@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"flink-job-exporter/config"
 	dao "flink-job-exporter/dao/impl"
 	"flink-job-exporter/service"
@@ -14,12 +13,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
 func main() {
-	c := loadAppConfig()
+	c := config.LoadAppConfig()
 	fmt.Println(c)
 	db := openDb(c)
 	defer db.Close()
@@ -63,17 +61,4 @@ func openDb(c *config.AppConfig) *sql.DB {
 		log.Fatal(err)
 	}
 	return db
-}
-
-func loadAppConfig() *config.AppConfig {
-	file, err := os.ReadFile("r.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	r := config.AppConfig{}
-	err = json.Unmarshal(file, &r)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return &r
 }

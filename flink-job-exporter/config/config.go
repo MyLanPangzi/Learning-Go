@@ -1,5 +1,11 @@
 package config
 
+import (
+	"encoding/json"
+	"log"
+	"os"
+)
+
 type AppConfig struct {
 	ScrapeInterval string `json:"scrapeInterval"`
 	Http           struct {
@@ -19,4 +25,17 @@ type AppConfig struct {
 	Monitor struct {
 		Tag string `json:"tag"`
 	} `json:"monitor"`
+}
+
+func LoadAppConfig() *AppConfig {
+	file, err := os.ReadFile("r.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	r := AppConfig{}
+	err = json.Unmarshal(file, &r)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return &r
 }
