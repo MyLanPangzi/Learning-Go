@@ -1,0 +1,13 @@
+### hello without password
+GET http://localhost:8080/hello
+
+### hello given password
+GET http://localhost:8080/hello
+X-Secret-Password: hello
+
+### person/greet
+GET http://localhost:8080/person/greet
+
+### dog greet
+GET http://localhost:8080/dog/greet
+
