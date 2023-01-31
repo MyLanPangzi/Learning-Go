@@ -1,0 +1,6 @@
+
+### Send POST request with body as parameters
+POST http://localhost:8080
+Content-Type: application/x-www-form-urlencoded
+
+data=world
