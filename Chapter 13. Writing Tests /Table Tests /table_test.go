@@ -22,7 +22,9 @@ func TestDoMath(t *testing.T) {
 		//    {"bad_division", 2, 0, "/", 0, `division by zero`},
 		{"2+2=4", args{2, 2, "+"}, 4, false},
 		{"2*2=4", args{2, 2, "*"}, 4, false},
+		{"2-2=0", args{2, 2, "-"}, 0, false},
 		{"2/2=1", args{2, 2, "/"}, 1, false},
+		{"2%2=1", args{2, 2, "%"}, 1, true},
 		{"2/0 error", args{2, 0, "/"}, 0, true},
 	}
 	for _, tt := range tests {
