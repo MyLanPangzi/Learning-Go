@@ -1,0 +1,15 @@
+{{ range . }}
+
+  INSERT INTO mysql.phemex_monitor.{{.Table}}
+  /*+ OPTIONS(
+  'sink.buffer-flush.max-rows' = '1000',
+  'sink.buffer-flush.interval' = '3s'
+  ) */
+  SELECT *
+  FROM hive.kafka.stg_{{.Db}}_{{.Table}}_cdc_realtime_debezium_json
+  /*+ OPTIONS(
+  'properties.group.id' = 'stg_{{.Db}}_{{.Table}}_cdc_realtime_2_mysql'
+  ) */
+  ;
+
+{{ end }}
