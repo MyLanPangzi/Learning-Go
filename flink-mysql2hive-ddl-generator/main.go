@@ -93,14 +93,14 @@ func makeData(cfg ExportConfig) []Data {
 		panic(err)
 	}
 	for _, t := range cfg.Tables {
-		row := db.QueryRow("select table_name from tables where TABLE_SCHEMA = ? and table_name regexp ? limit 1", cfg.Db, t.Regexp)
-		var table string
-		err = row.Scan(&table)
-		if err != nil {
-			panic(err)
-		}
+		//row := db.QueryRow("select table_name from tables where TABLE_SCHEMA = ? and table_name regexp ? limit 1", cfg.Db, t.Regexp)
+		//var table string
+		//err = row.Scan(&table)
+		//if err != nil {
+		//	panic(err)
+		//}
 
-		row = db.QueryRow(
+		row := db.QueryRow(
 			"select group_concat(concat('`',"+"COLUMN_NAME,'`', "+`'\t', case
                                                   when DATA_TYPE like '%int' then DATA_TYPE
                                                   when DATA_TYPE like '%char' then COLUMN_TYPE
@@ -116,7 +116,7 @@ where TABLE_SCHEMA = ?
 order by ORDINAL_POSITION
 			`,
 			cfg.Db,
-			table,
+			t.Regexp,
 		)
 		var columns string
 		err = row.Scan(&columns)
