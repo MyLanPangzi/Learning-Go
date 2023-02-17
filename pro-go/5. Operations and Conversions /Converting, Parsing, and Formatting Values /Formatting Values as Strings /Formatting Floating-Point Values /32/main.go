@@ -1,0 +1,20 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	//val := 49.95
+	//    Fstring := strconv.FormatFloat(val, 'f', 2, 64)
+	//    Estring := strconv.FormatFloat(val, 'e', -1, 64)
+	//    fmt.Println("Format F: " + Fstring)
+	//    fmt.Println("Format E: " + Estring)
+
+	f := 49.95
+	fmt.Println(
+		strconv.FormatFloat(f, 'f', 2, 64),
+		strconv.FormatFloat(f, 'e', -1, 64),
+	)
+}
