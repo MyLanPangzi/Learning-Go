@@ -1,4 +1,4 @@
-package main
+package _7
 
 //func printDetails(values ...any) {
 //	for _, v := range values {

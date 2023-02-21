@@ -1,4 +1,4 @@
-package main
+package _7
 
 //
 //import (
