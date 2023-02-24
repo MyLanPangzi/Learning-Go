@@ -1,6 +1,7 @@
 package placeholder
 
 import (
+	"errors"
 	"io"
 	"platform/config"
 	"platform/pipeline"
@@ -23,8 +24,10 @@ func (s *SimpleMessageComponent) ProcessRequest(context *pipeline.ComponentConte
 	if found {
 		_, err := io.WriteString(context.ResponseWriter, msg)
 		if err != nil {
-			context.Error(err)
+			panic(err)
 		}
+	} else {
+		context.Error(errors.New("cannot find config setting"))
 	}
-	next(context)
+	//next(context)
 }
