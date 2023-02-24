@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func GerService(target any) error {
+func GetService(target any) error {
 	return GetServiceForContext(context.Background(), target)
 }
 

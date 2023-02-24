@@ -10,9 +10,9 @@ import (
 func main() {
 	services.RegisterDefaultServices()
 	var cfg config.Configuration
-	services.GerService(&cfg)
+	services.GetService(&cfg)
 	var logger logging.Logger
-	services.GerService(&logger)
+	services.GetService(&logger)
 	writeMessage(logger, cfg)
 	services.Call(writeMessage)
 	s := struct {
