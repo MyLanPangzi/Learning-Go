@@ -1,0 +1,8 @@
+{
+  "section": {
+    "int": 1,
+    "float": 1,
+    "string": "1",
+    "bool": true
+  }
+}

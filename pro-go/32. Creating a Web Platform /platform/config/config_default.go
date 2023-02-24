@@ -6,17 +6,17 @@ type DefaultConfig struct {
 	configData map[string]any
 }
 
-func (c *DefaultConfig) get(name string) (result any, found bool) {
+func (c *DefaultConfig) get(name string) (any, bool) {
 	data := c.configData
+	var result any
+	var found bool
 	for _, k := range strings.Split(name, ":") {
-		r, found := data[k]
-		if section, ok := r.(map[string]any); ok && found {
+		result, found = data[k]
+		if section, ok := result.(map[string]any); ok && found {
 			data = section
-			continue
 		}
-		return r, found
 	}
-	return nil, false
+	return result, found
 }
 func (c *DefaultConfig) GetString(name string) (value string, found bool) {
 	if result, found := c.get(name); found {
