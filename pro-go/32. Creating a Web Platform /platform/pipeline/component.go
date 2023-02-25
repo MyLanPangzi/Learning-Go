@@ -19,3 +19,8 @@ type MiddlewareComponent interface {
 	Init()
 	ProcessRequest(*ComponentContext, func(*ComponentContext))
 }
+
+type ServiceMiddlewareComponent interface {
+	Init()
+	ImplementsProcessRequestWithServices()
+}
