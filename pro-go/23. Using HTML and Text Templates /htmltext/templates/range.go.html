@@ -1,0 +1,24 @@
+{{- define "currency" -}} {{ printf "$%.2f" . }} {{- end -}}
+{{- define "basicProduct" -}}
+    Name:{{.Name}}, Category:{{.Category}},
+    {{- template "currency" .Price}}
+{{- end -}}
+{{- define "expensiveProduct" -}}
+    Expensive Product:{{.Name}}, Category:{{.Category}},
+    {{- template "currency" .Price}}
+{{- end -}}
+{{- define "middleProduct" -}}
+    Midrange Product:{{.Name}}, Category:{{.Category}},
+    {{- template "currency" .Price}}
+{{- end -}}
+{{- define "mainTemplate" -}}
+    {{ range . -}}
+        {{- if lt .Price 100.0 }}
+            <h1>{{ template "basicProduct" .}}</h1>
+        {{- else if gt .Price 1500.0 }}
+            <h1>{{ template "expensiveProduct" .}}</h1>
+        {{- else }}
+            <h1>{{ template "middleProduct" .}}</h1>
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
