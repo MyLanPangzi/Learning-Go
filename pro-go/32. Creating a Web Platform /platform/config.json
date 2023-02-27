@@ -10,5 +10,9 @@
   },
   "http": {
     "port": 8080
+  },
+  "templates": {
+    "reload": true,
+    "path": "placeholder/*.go.html"
   }
 }

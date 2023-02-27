@@ -3,6 +3,7 @@ package services
 import (
 	"platform/config"
 	"platform/logging"
+	"platform/templates"
 )
 
 func RegisterDefaultServices() {
@@ -18,6 +19,16 @@ func RegisterDefaultServices() {
 	}
 	err = AddSingleton(func(cfg config.Configuration) logging.Logger {
 		return logging.NewDefaultLogger(cfg)
+	})
+	if err != nil {
+		panic(err)
+	}
+	err = AddSingleton(func(cfg config.Configuration) templates.TemplateExecutor {
+		err := templates.LoadTemplates(cfg)
+		if err != nil {
+			panic(err)
+		}
+		return &templates.LayoutTemplateProcessor{}
 	})
 	if err != nil {
 		panic(err)

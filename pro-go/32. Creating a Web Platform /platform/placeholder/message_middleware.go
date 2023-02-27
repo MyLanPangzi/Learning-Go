@@ -1,33 +1,32 @@
 package placeholder
 
 import (
-	"errors"
-	"io"
 	"platform/config"
 	"platform/pipeline"
-	"platform/services"
+	"platform/templates"
 )
 
 type SimpleMessageComponent struct {
+	Message string
+	Cfg     config.Configuration
+}
+
+func (s *SimpleMessageComponent) ImplementsProcessRequestWithServices() {
 }
 
 func (s *SimpleMessageComponent) Init() {
+	s.Message = s.Cfg.GetStringDefault("main:message", "Hello")
 }
 
-func (s *SimpleMessageComponent) ProcessRequest(context *pipeline.ComponentContext, next func(*pipeline.ComponentContext)) {
-	var cfg config.Configuration
-	err := services.GetService(&cfg)
+func (s *SimpleMessageComponent) ProcessRequestWithServices(
+	context *pipeline.ComponentContext,
+	next func(*pipeline.ComponentContext),
+	t templates.TemplateExecutor,
+) {
+	err := t.ExecTemplate(context.ResponseWriter, "simple_message.go.html", s.Message)
 	if err != nil {
-		panic(err)
+		context.Error(err)
+		return
 	}
-	msg, found := cfg.GetString("main:message")
-	if found {
-		_, err := io.WriteString(context.ResponseWriter, msg)
-		if err != nil {
-			panic(err)
-		}
-	} else {
-		context.Error(errors.New("cannot find config setting"))
-	}
-	//next(context)
+	next(context)
 }
