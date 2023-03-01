@@ -1,11 +1,19 @@
-[
-  {
-    "db": "cdc",
-    "tables": [
-      {
-        "regexp": "t_withdraws_new_user_active_v3",
-        "table": "t_withdraws_new_user_active"
-      }
-    ]
-  }
-]
+{
+  "endpoint": "",
+  "configs": [
+    {
+      "db": "cdc",
+      "dest_db": "cdc",
+      "username": "root",
+      "password": "!QAZ2wsx",
+      "host": "localhost",
+      "port": 3306,
+      "tables": [
+        {
+          "regexp": "t_withdraws_new_user_active_v3",
+          "table": "t_withdraws_new_user_active"
+        }
+      ]
+    }
+  ]
+}

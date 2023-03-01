@@ -3,7 +3,6 @@ package service
 import "io"
 
 type TableService interface {
-	GetData() []TableData
 	PrintData(writer io.Writer) error
 }
 

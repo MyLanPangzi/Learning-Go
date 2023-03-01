@@ -12,46 +12,24 @@ import (
 )
 
 type DbService interface {
-	OpenDb(c config.ExportConfig, endpoint string) (*sql.DB, error)
+	OpenDb(c config.ExportConfig, db, endpoint string) (*sql.DB, error)
 }
 
-type DbServiceFunc func(c config.ExportConfig, endpoint string) (*sql.DB, error)
-
-func (d DbServiceFunc) OpenDb(c config.ExportConfig, endpoint string) (*sql.DB, error) {
-	return d(c, endpoint)
+type DefaultDbService struct {
 }
 
-func LocalDbServiceFunc(c config.ExportConfig, endpoint string) (*sql.DB, error) {
-	cfg := &mysql.Config{
-		User:                 "root",
-		Passwd:               "!QAZ2wsx",
-		Net:                  "tcp",
-		Addr:                 "localhost:3306",
-		DBName:               "information_schema",
-		AllowNativePasswords: true,
-	}
-	db, err := sql.Open("mysql", cfg.FormatDSN())
-	if err != nil {
-		panic(err)
-	}
-	return db, err
+func NewDefaultDbService() *DefaultDbService {
+	return &DefaultDbService{}
 }
 
-type AwsDbService struct {
-}
-
-func NewAwsDbService() *AwsDbService {
-	return &AwsDbService{}
-}
-
-func (a *AwsDbService) OpenDb(c config.ExportConfig, endpoint string) (*sql.DB, error) {
+func (a *DefaultDbService) OpenDb(c config.ExportConfig, database, endpoint string) (*sql.DB, error) {
 	dbConfig := GetDbConfig(c, endpoint)
 	cfg := &mysql.Config{
 		User:                 dbConfig.Username,
 		Passwd:               dbConfig.Password,
 		Net:                  "tcp",
 		Addr:                 fmt.Sprintf("%s:%d", dbConfig.Host, dbConfig.Port),
-		DBName:               "information_schema",
+		DBName:               database,
 		AllowNativePasswords: true,
 	}
 	db, err := sql.Open("mysql", cfg.FormatDSN())
@@ -71,6 +49,14 @@ type DbConfig struct {
 }
 
 func GetDbConfig(c config.ExportConfig, endpoint string) *DbConfig {
+	if c.Username != "" {
+		return &DbConfig{
+			Username: c.Username,
+			Password: c.Password,
+			Host:     c.Host,
+			Port:     c.Port,
+		}
+	}
 	cfg := aws.NewConfig()
 	region := "ap-southeast-1"
 	cfg.Region = &region
