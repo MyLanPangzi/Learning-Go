@@ -1,0 +1,16 @@
+{
+  "endpoint": "",
+  "template": "testdata/mysql2hive.ddl.go.html",
+  "configs": [
+    {
+      "db": "cdc",
+      "port": 3306,
+      "tables": [
+        {
+          "regexp": "t_withdraws_new_user_active_v3",
+          "table": "t_withdraws_new_user_active"
+        }
+      ]
+    }
+  ]
+}

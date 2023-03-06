@@ -15,7 +15,7 @@ type Stg2MysqlHiveDdlTableService struct {
 }
 
 func NewStg2MysqlHiveDdlTableService(cfg config.Configuration, dbService DbService) *Stg2MysqlHiveDdlTableService {
-	bytes, err := os.ReadFile("ddl.go.html")
+	bytes, err := os.ReadFile(cfg.Template)
 	if err != nil {
 		panic(err)
 	}

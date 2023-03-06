@@ -1,0 +1,15 @@
+{
+  "endpoint": "",
+  "template": "testdata/mysql2hive.dml.go.html",
+  "configs": [
+    {
+      "db": "cdc",
+      "tables": [
+        {
+          "regexp": "t_withdraws_new_user_active_v3",
+          "table": "t_withdraws_new_user_active"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "endpoint": "",
+  "template": "testdata/mysql2mysql_flink_hive.ddl.go.html",
+  "configs": [
+    {
+      "db": "cdc",
+      "dest_db": "cdc",
+      "username": "root",
+      "password": "!QAZ2wsx",
+      "host": "localhost",
+      "port": 3306,
+      "tables": [
+        {
+          "regexp": "t_withdraws_new_user_active_v3",
+          "table": "t_withdraws_new_user_active"
+        }
+      ]
+    }
+  ]
+}

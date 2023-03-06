@@ -1,0 +1,22 @@
+{{ range . }}
+INSERT INTO hive.stg.stg_{{.Db}}_{{.Table}}_realtime
+/*+ OPTIONS(
+'sink.partition-commit.policy.kind'='metastore,success-file',
+'sink.partition-commit.delay'='0s'
+) */
+SELECT `key`
+, `value`
+, `kafka_topic`
+, `kafka_partition`
+, `kafka_offset`
+, `kafka_timestamp`
+, `kafka_timestamp_type`
+, CAST(proctime AS STRING)
+, DATE_FORMAT(kafka_timestamp, 'yyyyMMdd') AS dt
+FROM hive.kafka.stg_base_table
+/*+ OPTIONS(
+'topic' = 'stg_{{.Db}}_{{.Table}}_realtime',
+'properties.group.id' = 'stg_{{.Db}}_{{.Table}}_realtime_2_hive'
+) */
+;
+{{ end }}

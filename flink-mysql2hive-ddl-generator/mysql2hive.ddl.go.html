@@ -1,0 +1,19 @@
+{{ range . }}
+CREATE EXTERNAL TABLE IF NOT EXISTS  hive.stg.stg_{{.Db}}_{{.Table}}_realtime
+(
+`key`                  string,
+`value`                string,
+`kafka_topic`          string,
+`kafka_partition`      int,
+`kafka_offset`         bigint,
+`kafka_timestamp`      timestamp,
+`kafka_timestamp_type` string,
+`proctime`             string
+)
+PARTITIONED BY (
+`dt` string)
+STORED AS PARQUET
+LOCATION
+'s3://_{{.Db}}_{{.Table}}_realtime'
+TBLPROPERTIES ( 'parquet.compression' = 'SNAPPY');
+{{ end }}

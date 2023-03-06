@@ -7,6 +7,7 @@ import (
 
 type Configuration struct {
 	Endpoint string `json:"endpoint"`
+	Template string `json:"template"`
 	Configs  []ExportConfig
 }
 
@@ -25,7 +26,11 @@ type ExportConfig struct {
 }
 
 func LoadConfiguration() Configuration {
-	bytes, err := os.ReadFile("application.json")
+	return LoadConfigurationFrom("application.json")
+}
+
+func LoadConfigurationFrom(filename string) Configuration {
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
